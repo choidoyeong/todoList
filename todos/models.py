@@ -7,16 +7,12 @@ class Tag(models.Model):
     name = models.CharField(max_length=200)
 
 class Todo(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASECADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=200)
-    tags = models.ManyToManyField(Tag, through='Categorize')
-    success = models.BooleanField(defualt=False) 
+    tags = models.ManyToManyField(Tag)
+    success = models.BooleanField(default=False) 
     deadline = models.DateTimeField(null=True)
 
-class Categorize(models.Model):
-    tag  = models.ForeignKey(Tag, on_delete=models.CASECADE)
-    todo = models.ForeignKey(Todo, on_delete=models.CASECADE)
-
 class DoneTodo(models.Model):
-    todo = models.ForeignKey(Todo, on_delete=models.CASECADE)
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE)
     done_date = models.DateField(auto_now_add = True)
