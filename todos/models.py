@@ -11,5 +11,6 @@ class Todo(models.Model):
     deadline = models.DateTimeField(null=True)
 
 class DoneTodo(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     todo = models.ForeignKey(Todo, on_delete=models.CASCADE)
     done_date = models.DateField(auto_now_add = True)
