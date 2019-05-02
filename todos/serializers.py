@@ -11,24 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
             user = User.objects.create_user(validated_data['username'], None, validated_data['password'])
             return user
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ('name', )
-
 class TodoSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many = True)
     class Meta:
-        models = Todo
-        fields = ('id','owner','content', 'tags', 'success','deadline')
-
-    def create(self, validated_data):
-        tag_datas = validated_data.pop('tags')
-        todo = Todo.objects.create(**validated_data)
-        for tag_data in tag_datas:
-            tag = Tag.objects.get_or_create(**tag_data)
-            todo.tags.add(tag)
-        return todo
+        model = Todo
+        fields = ('id','owner','content', 'tag', 'success','deadline')
 
 class DoneTodoSerailizer(serializers.ModelSerializer):
     class Meta:
