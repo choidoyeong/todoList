@@ -8,10 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'password')
 
         def create(self, validated_data):
-            password = validated_data.pop('password')
-            user = User.objects.create(**validated_data)
-            user.set_password(password)
-            user.save()
+            user = User.objects.create_user(validated_data['username'], None, validated_data['password'])
             return user
 
 class TagSerializer(serializers.ModelSerializer):
